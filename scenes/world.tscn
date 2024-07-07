@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://buu72dnps1wnm"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_0pxwj"]
+[ext_resource type="PackedScene" uid="uid://dmq8bflwul3us" path="res://scenes/player.tscn" id="4_bg8xs"]
+[ext_resource type="PackedScene" uid="uid://dgarruo3sdiil" path="res://scenes/tile_map.tscn" id="4_j4464"]
+[ext_resource type="PackedScene" uid="uid://ft5ubm21xpl5" path="res://scenes/enemy.tscn" id="6_tc4hx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_geeea"]
+size = Vector2(46, 23)
+
+[node name="world" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_0pxwj")
+
+[node name="player" parent="." instance=ExtResource("4_bg8xs")]
+position = Vector2(45.5, 135)
+
+[node name="enemy2" parent="." instance=ExtResource("6_tc4hx")]
+position = Vector2(253, 111)
+
+[node name="TileMap" parent="." instance=ExtResource("4_j4464")]
+layer_1/tile_data = PackedInt32Array(524289, 2, 5, 262147, 2, 5, 524305, 2, 5, 262162, 2, 5, -327663, 2, 5, -327676, 2, 5, -327681, 2, 5, -65530, 2, 5, 65534, 720898, 2, 262144, 2, 1, 524293, 2, 1, 589838, 2, 1, 458771, 2, 1, -131053, 2, 1, -262130, 2, 1, -327672, 2, 1)
+
+[node name="oob_collision" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="oob_collision"]
+polygon = PackedVector2Array(0, 1, 193, 0, 196, -22, 236, -22, 238, 0, 367, 0, 367, 271, 0, 271, 0, 3, -49, 92, -47, 281, 443, 286, 411, -57, 16, -53, -6, -5, -1, 2, 0, 2)
+
+[node name="second_plane_teleport" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="second_plane_teleport"]
+position = Vector2(215, -10.5)
+shape = SubResource("RectangleShape2D_geeea")
+
+[connection signal="body_entered" from="second_plane_teleport" to="." method="_on_second_plane_teleport_body_entered"]
+[connection signal="body_exited" from="second_plane_teleport" to="." method="_on_second_plane_teleport_body_exited"]

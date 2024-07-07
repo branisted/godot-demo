@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8dmh3f1x1a0i"]
+
+[ext_resource type="Script" path="res://scripts/second.gd" id="1_e42qe"]
+[ext_resource type="PackedScene" uid="uid://ft5ubm21xpl5" path="res://scenes/enemy.tscn" id="2_o5ct1"]
+[ext_resource type="PackedScene" uid="uid://dmq8bflwul3us" path="res://scenes/player.tscn" id="3_06k0q"]
+[ext_resource type="PackedScene" uid="uid://dgarruo3sdiil" path="res://scenes/tile_map.tscn" id="4_yvqgh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcwwh"]
+size = Vector2(84, 29)
+
+[node name="second" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_e42qe")
+
+[node name="enemy" parent="." instance=ExtResource("2_o5ct1")]
+position = Vector2(89, 193)
+
+[node name="enemy2" parent="." instance=ExtResource("2_o5ct1")]
+position = Vector2(125, 79)
+
+[node name="enemy4" parent="." instance=ExtResource("2_o5ct1")]
+position = Vector2(230, 67)
+
+[node name="enemy5" parent="." instance=ExtResource("2_o5ct1")]
+position = Vector2(310, 80)
+
+[node name="enemy3" parent="." instance=ExtResource("2_o5ct1")]
+position = Vector2(298, 199)
+
+[node name="player" parent="." instance=ExtResource("3_06k0q")]
+position = Vector2(190, 251)
+
+[node name="TileMap" parent="." instance=ExtResource("4_yvqgh")]
+layer_1/tile_data = PackedInt32Array(524288, 2, 5, 196608, 2, 5, -262137, 2, 5, -262143, 2, 5, -65519, 2, 5, -131060, 327682, 0, -65531, 2, 5, 393232, 2, 5, 393219, 2, 5, 458758, 524290, 6, 458764, 327682, 0, 524300, 327682, 0, 655364, 2, 1, 65544, 2, 1, 655379, 2, 1)
+
+[node name="oob_collision" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="oob_collision"]
+polygon = PackedVector2Array(1, 0, 367, 0, 368, 271, 221, 272, 222, 299, 141, 295, 146, 271, 0, 271, 1, 4, -34, 7, -56, 268, -48, 299, 57, 348, 366, 339, 467, 211, 459, 46, 424, -1, 394, -44, 223, -90, 103, -72, -40, -52, -41, -14, -28, -8, 1, 3)
+
+[node name="first_teleport" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="first_teleport"]
+position = Vector2(182, 285.5)
+shape = SubResource("RectangleShape2D_gcwwh")
+
+[connection signal="body_entered" from="first_teleport" to="." method="_on_first_teleport_body_entered"]
+[connection signal="body_exited" from="first_teleport" to="." method="_on_first_teleport_body_exited"]
